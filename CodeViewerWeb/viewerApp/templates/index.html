@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  </head>
+  <div class="container">
+
+    <header class="codrops-header">
+
+      <link rel="stylesheet" href="/static/css/test.css">
+      <link rel="stylesheet" href="/static/css/input.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <h1>ADDRESS INQUIRY</h1>
+      <span>Maybe it seems like I don't care, but actually I do.</span>
+    </header>
+
+    <section class="content">
+      <div class="box bg-1">
+        <form>
+          <fieldset>
+            <input type="text" class="search_input" />
+            <button type="submit" class="search_button" ><i class="fa fa-search"></i></button>
+          </fieldset>
+        </form>
+      </div>
+      <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>
+    </section>
+
+  </div><!-- /container -->
+
+  <script>
+    let searchBtn = document.querySelector('.search_button');
+
+    searchBtn.addEventListener('click', e => {
+      let address = document.querySelector('.search_input').value;
+      let param = { 'address': address, }
+
+      $.ajax({
+        url : '{% url 'test' %}',
+        type : 'POST',
+        data : JSON.atringify(param),
+        success : function(data){
+          console.log(data);
+          alert('dz');
+        },
+        error : function(){
+          alert('뭐지');
+        }
+      });
+    });
+
+  </script>
+</html>
