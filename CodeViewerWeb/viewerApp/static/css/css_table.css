@@ -1,0 +1,23 @@
+
+.address_table{
+  font-size: 1em;
+  background: rgb(240,240,240);
+  color: #37474f;
+  margin-top: 20px;
+  padding: 0px 15px 0px 15px;
+  position: static;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.address_table th{
+  padding: 12px 0px 12px 0px;
+  color: #37474f;
+  border-bottom: 1px solid lightgray;
+}
+
+.address_table td{
+  text-align: left;
+  padding: 12px 3em 12px 0px;
+  color: rgb(125,125,125);
+}

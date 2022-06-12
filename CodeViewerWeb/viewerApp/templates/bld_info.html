@@ -1,0 +1,21 @@
+
+<link rel="stylesheet" href="/static/css/css_table.css">
+
+<html>
+  <table id="address_table" class="address_table">
+    <thead>
+      <tr style="text-align: left;">
+        <th>도로명주소</th>
+        <th>건물관리번호</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ad in address %}
+          <tr style="text-align: left;">
+            <td>{{ ad.address }}</td>
+            <td><p class="btn" data-clipboard-text='{{ ad.num }}'>{{ ad.num }}</p></td>
+          </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</html>

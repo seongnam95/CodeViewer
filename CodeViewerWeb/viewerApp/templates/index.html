@@ -1,52 +1,59 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  </head>
-  <div class="container">
-
-    <header class="codrops-header">
-
-      <link rel="stylesheet" href="/static/css/test.css">
-      <link rel="stylesheet" href="/static/css/input.css">
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/static/css/css_main.css">
+      <link rel="stylesheet" href="/static/css/css_input.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <title>Document</title>
+  </head>
+
+  <div class="container">
+    <header class="codrops-header">
       <h1>ADDRESS INQUIRY</h1>
       <span>Maybe it seems like I don't care, but actually I do.</span>
     </header>
 
     <section class="content">
-      <div class="box bg-1">
-        <form>
-          <fieldset>
-            <input type="text" class="search_input" />
-            <button type="submit" class="search_button" ><i class="fa fa-search"></i></button>
-          </fieldset>
-        </form>
-      </div>
+
+      <form name="addressForm" method="post" action="j_security_check">
+        <fieldset>
+          <input type="text" id="search_input" />
+          <button type="submit" id="search_button" ><i class="fa fa-search"></i></button>
+        </fieldset>
+      </form>
+      <table id="address_table" class="address_table"></table>
       <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>
     </section>
+  </div>
 
-  </div><!-- /container -->
+  <!-- jQuery 라이브러리 사용 -->
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $('form[name=addressForm]').on('submit', function (e) {
+            e.preventDefault();
 
-  <script>
-    let searchBtn = document.querySelector('.search_button');
-
-    searchBtn.addEventListener('click', e => {
-      let address = document.querySelector('.search_input').value;
-      let param = { 'address': address, }
-
-      $.ajax({
-        url : '{% url 'test' %}',
-        type : 'POST',
-        data : JSON.atringify(param),
-        success : function(data){
-          console.log(data);
-          alert('dz');
-        },
-        error : function(){
-          alert('뭐지');
-        }
-      });
+            var request = $.ajax({
+                url: "search",
+                type: "GET",
+                data: { address: $('#search_input', this).val() },
+                dataType: "html",
+                success:function(data){
+                  $('#address_table').html(data)
+                },
+                error: function(request, status, error){
+                  alert('서버와의 연결에 실패하였습니다.');
+                }
+            });
+        });
     });
-
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <script>
+    var clipboard = new ClipboardJS('.btn');
+    clipboard.on('success', function() {
+    });
+  </script>
+
 </html>

@@ -6,6 +6,20 @@
   font-style: normal;
 }
 
+/* Body */
+body {
+  background: #cfd8dc;
+  color: #37474f;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+}
+
 /* Header */
 .codrops-header {
   padding: 1em 190px 3em;
@@ -27,35 +41,16 @@
   color: #A8B3B8;
 }
 
-/* Body */
-body {
-  background: #cfd8dc;
-  color: #37474f;
-  font-weight: 400;
-  font-size: 1em;
-}
-
-.container {
-  margin: 0 auto;
-  text-align: center;
-  overflow: hidden;
-}
+/* Content */
 .content {
   padding: 2em 1em 5em;
   z-index: 1;
   max-width: 1000px;
   margin: 0 auto;
 }
-.content p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1em;
-  color: #A8B3B8;
-  margin: 1em 0;
-  padding: 0 0 2em;
-}
 
 .box {
-  padding: 4.5em 0;
+  padding: 1.5em 0;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -64,10 +59,18 @@ body {
   flex-wrap: wrap;
   -webkit-justify-content: center;
   justify-content: center;
+  position: static;
 }
 
-/* Box colors */
 .bg-1 {
   background: #ECEFF1;
   color: #37474f;
+}
+
+.content p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  color: #A8B3B8;
+  margin: 1em 0;
+  padding: 0 0 2em;
 }
