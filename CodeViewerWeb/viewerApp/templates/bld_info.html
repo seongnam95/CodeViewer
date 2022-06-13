@@ -1,10 +1,11 @@
 
-<link rel="stylesheet" href="/static/css/css_table.css">
+<link rel="stylesheet" href="/static/css/css_table.css?after">
 
 <html>
   <table id="address_table" class="address_table">
     <thead>
       <tr style="text-align: left;">
+        <th>우편번호</th>
         <th>도로명주소</th>
         <th>건물관리번호</th>
       </tr>
@@ -12,8 +13,9 @@
     <tbody>
         {% for ad in address %}
           <tr style="text-align: left;">
-            <td>{{ ad.address }}</td>
-            <td><p class="btn" data-clipboard-text='{{ ad.num }}'>{{ ad.num }}</p></td>
+            <td><p id="zip" class="btn" data-clipboard-text='{{ ad.zip }}'>{{ ad.zip }}</p></td>
+            <td id="address_td">{{ ad.address }}</td>
+            <td><p id="num" class="btn" data-clipboard-text='{{ ad.num }}'>{{ ad.num }}</p></td>
           </tr>
         {% endfor %}
     </tbody>

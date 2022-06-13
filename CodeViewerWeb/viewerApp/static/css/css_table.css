@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Poppins:ital,wght@1,300&display=swap');
 
 .address_table{
   font-size: 1em;
@@ -11,13 +12,34 @@
 }
 
 .address_table th{
-  padding: 12px 0px 12px 0px;
-  color: #37474f;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 12px 15px 12px 0px;
+  color: rgb(135,135,135);
   border-bottom: 1px solid lightgray;
 }
 
-.address_table td{
+#address_td{
   text-align: left;
-  padding: 12px 3em 12px 0px;
   color: rgb(125,125,125);
+  padding-right: 50px;
+}
+
+#zip{
+  padding-right: 10px;
+}
+
+#zip:hover{
+  color: rgb(165,165,255);
+  padding-right: 10px;
+}
+
+#num{
+  color: rgb(125,125,255);
+  padding-right: 10px;
+}
+
+#num:hover{
+  color: rgb(165,165,255);
+  padding-right: 10px;
 }

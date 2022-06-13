@@ -11,7 +11,7 @@ class RequestApi:
                        '지하여부': 'udrtYn', '번': 'lnbrMnnm', '지': 'lnbrSlno', '동': 'detBdNmList', '건물명칭': 'bdNm',
                        '도로명주소': 'roadAddrPart1', '도로명코드': 'rnMgtSn', '건물본번': 'buldMnnm', '건물부번': 'buldSlno'}
         self.column = {
-            '도로명주소': 'roadAddr', '건물명칭': 'bdNm', '건물관리번호': 'bdMgtSn'
+            '우편번호': 'zipNo', '도로명주소': 'roadAddr', '건물명칭': 'bdNm', '건물관리번호': 'bdMgtSn'
         }
 
     def processed_data(self, address):
