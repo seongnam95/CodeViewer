@@ -1,10 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import json
-
 from django.views.decorators.csrf import csrf_exempt
 
-from .module.request_api import RequestApi
+from .module.request_api import *
 
 
 # Create your views here.
@@ -13,13 +10,13 @@ def main(request):
 
 
 @csrf_exempt
-def BldInfoViewer(request):
+def info_viewer(request):
     template = 'bld_info.html'
-
     if request.method == 'GET':
         address = request.GET.get('address')
-        request_api = RequestApi()
-        result = request_api.processed_data(address)
+
+        result = processed_data(address)
+        get_old_post_num(address)
 
         address_list = []
         for i in result.index:
