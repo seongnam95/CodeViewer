@@ -23,19 +23,23 @@ def get_old_post_num(new_address):
 
     for i in full_names.values():
         new_address = new_address.replace(i, '')
-
     url = 'http://post.phpschool.com/json.phps.kr'
     params = {'addr': new_address, 'ipkey': '1740878', 'type': 'old'}
-    result = json.loads(http_post(url, params))['post']
+    result = json.loads(http_post(url, params))
 
     df = pd.DataFrame(columns=['도로명주소', '우편번호'])
-    for n, i in enumerate(result):
+    for n, i in enumerate(result['post']):
         name = i['addr_1']
         address = '%s %s %s' % (full_names[name], i['addr_2'], i['addr_3'])
         post_num = i['post']
         df.loc[n] = [address, post_num]
 
     return df
+
+
+def catch_data(data, address):
+    address = address.split('(')[0].strip().replace('  ', ' ')
+    print(address)
 
 
 def processed_data(address):
@@ -64,8 +68,7 @@ def processed_data(address):
             result.loc[i] = row_list
             row_list.clear()
 
-        result = matching_data(result, get_old_post_num(address))
-        print(result)
+        # result = matching_data(result, get_old_post_num(address))
 
         return result
 

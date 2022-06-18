@@ -27,10 +27,12 @@
         </fieldset>
       </form>
 
-        <div class="filebox">
+      <div class="filebox">
+        <form id="frm_excel" name="frm_excel" enctype="multipart/form-data">
           <label for="ex_filename">업로드</label>
-          <input type="file" id="ex_filename" class="upload-hidden">
-        </div>
+          <input type="file" id="ex_filename" name="file_excel" class="upload-hidden" accept=".xls, .xlsx, .xlsm">
+        </form>
+      </div>
 
       <table id="address_table" class="address_table"></table>
 <!--      <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>-->
@@ -44,7 +46,7 @@
         $('form[name=addressForm]').on('submit', function (e) {
             e.preventDefault();
 
-            var request = $.ajax({
+            $.ajax({
                 url: "search",
                 type: "GET",
                 data: { address: $('#search_input', this).val() },
@@ -64,10 +66,11 @@
           var fileTarget = $('.filebox .upload-hidden');
 
           fileTarget.on('change', function(){  // 값이 변경되면
-            if(window.FileReader){  // modern browser
+            if(window.FileReader){
               var filename = $(this)[0].files[0].name;
+              excel_upload();
             }
-            else {  // old IE
+            else {
               var filename = $(this).val().split('/').pop().split('\\').pop();
             }
 
