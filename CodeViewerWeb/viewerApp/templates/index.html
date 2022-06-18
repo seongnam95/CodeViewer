@@ -6,7 +6,9 @@
       <link rel="stylesheet" href="/static/css/css_input.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="/dist/notifications.css">
+
       <script src="/dist/notifications.js"></script>
+      <script type="text/javascript" src="/static/js/excel_upload.js"></script>
       <title>Document</title>
   </head>
 
@@ -20,10 +22,16 @@
 
       <form name="addressForm" method="post" action="j_security_check">
         <fieldset>
-          <input type="text" id="search_input" />
+          <input class="upload-name" type="text" id="search_input" />
           <button type="submit" id="search_button" ><i class="fa fa-search"></i></button>
         </fieldset>
       </form>
+
+        <div class="filebox">
+          <label for="ex_filename">업로드</label>
+          <input type="file" id="ex_filename" class="upload-hidden">
+        </div>
+
       <table id="address_table" class="address_table"></table>
 <!--      <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>-->
     </section>
@@ -51,11 +59,26 @@
         });
     });
   </script>
+  <script>
+      $(document).ready(function(){
+          var fileTarget = $('.filebox .upload-hidden');
+
+          fileTarget.on('change', function(){  // 값이 변경되면
+            if(window.FileReader){  // modern browser
+              var filename = $(this)[0].files[0].name;
+            }
+            else {  // old IE
+              var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+
+            $(this).siblings('.upload-name').val(filename);
+          });
+        });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
   <script>
     var clipboard = new ClipboardJS('.btn');
-    clipboard.on('success', function() {
-    });
+    clipboard.on('success', function() { });
   </script>
 
 </html>

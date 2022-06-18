@@ -9,7 +9,7 @@ fieldset {
 }
 
 input,
-button {
+#search_button {
   position: relative;
   width: 500px;
   height: 50px;
@@ -28,7 +28,7 @@ input:focus {
   outline: 0 none;
 }
 
-input:focus + button {
+input:focus + #search_button {
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
           transform: translate(0, 0);
@@ -36,7 +36,7 @@ input:focus + button {
           transition-duration: 0.3s;
 }
 
-input:focus + button .fa {
+input:focus + #search_button .fa {
   -webkit-transform: translate(0px, 0);
       -ms-transform: translate(0px, 0);
           transform: translate(0px, 0);
@@ -45,7 +45,7 @@ input:focus + button .fa {
   color: #fff;
 }
 
-button {
+#search_button {
   z-index: 1;
   width: 50px;
   border: 0 none;
@@ -71,4 +71,36 @@ button {
           transition-duration: 0.3s;
   -webkit-transition: all 0.1s ease-in-out;
           transition: all 0.1s ease-in-out;
+}
+
+#file_excel {
+  font-size: 1.4rem;
+  color: #29abe2;
+  z-index: 3;
+  top: 25%;
+}
+
+.filebox label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+}
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
 }

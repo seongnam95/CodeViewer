@@ -72,3 +72,10 @@ body {
   font-size: 1em;
   color: #A8B3B8;
 }
+
+/* 엑셀 업로드 버튼 */
+
+#upload_button {
+    color: white;
+    border: 1px;
+}
