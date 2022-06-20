@@ -7,6 +7,7 @@ import json
 from urllib.parse import urlparse, quote
 
 
+# 데이터 합치기
 def matching_data(data, add_data):
     for r in data.index:
         address = data['도로명주소'].loc[r]
@@ -16,6 +17,7 @@ def matching_data(data, add_data):
     return data
 
 
+# 구 우편번호
 def get_old_post_num(new_address):
     full_names = {'서울': '서울특별시', '부산': '부산광역시', '대구': '대구광역시', '인천': '인천광역시', '광주': '광주광역시',
                   '대전': '대전광역시', '울산': '울산광역시', '세종': '세종시', '경기': '경기도', '강원': '강원도', '충북': '충청북도',
