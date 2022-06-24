@@ -25,9 +25,9 @@ def get_old_post_num(new_address):
 
     for i in full_names.values():
         new_address = new_address.replace(i, '')
-
+    # 애니웨어: 3092219 # 가비아 1740878
     url = 'http://post.phpschool.com/json.phps.kr'
-    params = {'addr': new_address, 'ipkey': '1740878', 'type': 'old'}
+    params = {'addr': new_address, 'ipkey': '3092219', 'type': 'old'}
     result = json.loads(http_post(url, params))
 
     df = pd.DataFrame(columns=['도로명주소', '우편번호'])
