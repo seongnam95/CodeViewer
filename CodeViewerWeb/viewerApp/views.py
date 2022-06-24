@@ -50,14 +50,15 @@ def salary_update_excel(request):
             address = address.split('(')[0] if '(' in address else address
             excel_data['도로명주소'][i] = address
 
-            result = processed_data(excel_data['도로명주소'][i])
+            result = processed_data(address)
             # get_old_post_num(i)
 
             for r in result.index:
                 adr = result['도로명주소'][r].replace(' ', '')
                 if adr == address:
-                    excel_data['관리번호'][i] = result['건물관리번호'][r]
+                    excel_data['건물관리번호'][i] = result['건물관리번호'][r]
 
+        print(excel_data)
         # 파일 저장
         # file = request.FILES['file_excel']
         # fs = FileSystemStorage()
