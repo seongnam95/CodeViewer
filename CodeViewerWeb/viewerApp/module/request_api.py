@@ -31,6 +31,7 @@ def get_old_post_num(new_address):
     params = {'addr': new_address, 'ipkey': '3092219', 'type': 'old'}
 
     response = requests.post(url, data=params)
+    print(response)
     result = response.json()
 
     df = pd.DataFrame(columns=['도로명주소', '우편번호'])
