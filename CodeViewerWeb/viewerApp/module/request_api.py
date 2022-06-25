@@ -30,7 +30,7 @@ def get_old_post_num(new_address):
 
     params = {'addr': new_address, 'ipkey': '3092219', 'type': 'old'}
 
-    response = requests.post(url, data=params)
+    response = requests.post(url, data=params, verify=False)
     print('## response ########## :', response)
     result = response.json()
 
@@ -59,7 +59,7 @@ def processed_data(address):
         url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
         column = {'도로명주소': 'roadAddrPart1', '건물관리번호': 'bdMgtSn', '우편번호': ''}
 
-        response = requests.post(url, params=params).text.encode('utf-8')
+        response = requests.post(url, params=params, verify=False).text.encode('utf-8')
         xml_obj = bs4.BeautifulSoup(response, 'xml')
         rows = xml_obj.find_all('juso')
 
