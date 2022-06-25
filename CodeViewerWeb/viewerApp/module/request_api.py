@@ -27,10 +27,14 @@ def get_old_post_num(new_address):
         new_address = new_address.replace(i, '')
     # 애니웨어: 3092219 # 가비아 1740878
     url = 'http://post.phpschool.com/json.phps.kr'
+
     params = {'addr': new_address, 'ipkey': '3092219', 'type': 'old'}
-    result = json.loads(http_post(url, params))
+
+    response = requests.post(url, data=params)
+    result = response.json()
 
     df = pd.DataFrame(columns=['도로명주소', '우편번호'])
+    print(result)
 
     if 'post' in result.keys():
         for n, i in enumerate(result['post']):
@@ -54,7 +58,7 @@ def processed_data(address):
         url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
         column = {'도로명주소': 'roadAddrPart1', '건물관리번호': 'bdMgtSn', '우편번호': ''}
 
-        response = requests.get(url, params=params).text.encode('utf-8')
+        response = requests.post(url, params=params).text.encode('utf-8')
         xml_obj = bs4.BeautifulSoup(response, 'xml')
         rows = xml_obj.find_all('juso')
 
@@ -84,31 +88,3 @@ def processed_data(address):
     except Exception as e:
         print(f'error: {e}')
         return
-
-
-def http_post(url, data):
-    url_info = urlparse(url)
-
-    send_str = ''
-    if data:
-        for k, v in data.items():
-            send_str += str(str(quote(k) + '=') + quote(v)) + '&'
-
-    path = url_info.path
-    host = url_info.hostname
-    port = 80 if not url_info.port else url_info.port
-    with socket.socket() as s:
-        addr = (host, port)
-        s.connect(addr)
-
-        http = "POST " + str(path) + " HTTP/1.0\r\n"
-        http += "Host: " + str(host) + "\r\n"
-        http += "Content-Type: application/x-www-form-urlencoded\r\n"
-        http += str("Content-length: " + str(len(send_str))) + "\r\n"
-        http += "Connection: close\r\n\r\n"
-        http += str(send_str) + "\r\n\r\n"
-
-        s.send(http.encode())
-        result = s.recv(4096)
-
-        return result.decode('utf-8').split('\r\n\r\n')[1]
