@@ -13,15 +13,15 @@ def dbcon():
 
 def mysql_read():
     print('시작')
+    db = dbcon()
     try:
-        db = dbcon()
         c = db.cursor()
         c.execute("CREATE TABLE students (num varchar(50), name varchar(50))")
 
         db.commit()
 
     except Exception as e: print('db error: ', e)
-    finally: db.close()
+    db.close()
 
 
 # 데이터 합치기
