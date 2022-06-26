@@ -9,6 +9,7 @@ from .module.request_api import *
 
 # Create your views here.
 def main(request):
+    mysql_read()
     return render(request, 'index.html')
 
 

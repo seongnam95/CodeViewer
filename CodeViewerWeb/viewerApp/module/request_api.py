@@ -1,10 +1,27 @@
 import bs4
 import requests
 import pandas as pd
-import socket
-import json
+import pymysql
 
-from urllib.parse import urlparse, quote
+
+def dbcon():
+    host = 'jsn0509.mysql.pythonanywhere-services.com'
+    conn = pymysql.connect(
+        host=host, user='jsn0509', password='ks05090818@', db='jsn0509$dbinfo', charset='utf8')
+    return conn
+
+
+def mysql_read():
+    print('시작')
+    try:
+        db = dbcon()
+        c = db.cursor()
+        c.execute("CREATE TABLE students (num varchar(50), name varchar(50))")
+
+        db.commit()
+
+    except Exception as e: print('db error: ', e)
+    finally: db.close()
 
 
 # 데이터 합치기
