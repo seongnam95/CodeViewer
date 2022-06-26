@@ -7,7 +7,7 @@ import pymysql
 def dbcon():
     host = 'jsn0509.mysql.pythonanywhere-services.com'
     conn = pymysql.connect(
-        host=host, user='jsn0509', password='ks05090818@', db='jsn0509$dbinfo', charset='utf8')
+        host=host, user='jsn0509', password='@oksn241995', db='jsn0509$dbinfo', charset='utf8')
     return conn
 
 
