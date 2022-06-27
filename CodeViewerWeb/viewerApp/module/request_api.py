@@ -5,23 +5,14 @@ import pymysql
 
 
 def dbcon():
-    host = 'jsn0509.mysql.pythonanywhere-services.com'
+    host = 'db.snserver.site'
     conn = pymysql.connect(
-        host=host, user='jsn0509', password='@oksn241995', db='jsn0509$dbinfo', charset='utf8')
+        host=host, user='jsn0509', password='ks05090818@', db='dbjsn0509', charset='utf8')
     return conn
 
 
-def mysql_read():
-    print('시작')
-    db = dbcon()
-    try:
-        c = db.cursor()
-        c.execute("CREATE TABLE students (num varchar(50), name varchar(50))")
-
-        db.commit()
-
-    except Exception as e: print('db error: ', e)
-    db.close()
+def get_old_post_num(params):
+    return
 
 
 # 데이터 합치기
@@ -35,7 +26,7 @@ def matching_data(data, add_data):
 
 
 # 구 우편번호
-def get_old_post_num(new_address):
+def get_old_post_num2(new_address):
     full_names = {'서울': '서울특별시', '부산': '부산광역시', '대구': '대구광역시', '인천': '인천광역시', '광주': '광주광역시',
                   '대전': '대전광역시', '울산': '울산광역시', '세종': '세종시', '경기': '경기도', '강원': '강원도', '충북': '충청북도',
                   '충남': '충청남도', '전북': '전라북도', '전남': '전라남도', '경북': '경상북도', '경남': '경상남도', '제주': '제주도'}
@@ -74,7 +65,8 @@ def processed_data(address):
         key = 'U01TX0FVVEgyMDIxMTIwMjEzNTc0MzExMTk4Mjc='
         params = {'confmKey': key, 'currentPage': '1', 'countPerPage': '20', 'resultType': 'xml', 'keyword': address}
         url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
-        column = {'도로명주소': 'roadAddrPart1', '건물관리번호': 'bdMgtSn', '우편번호': ''}
+        column = {'도로명주소': 'roadAddrPart1', '도로명코드': 'rnMgtSn', '건물번호본번': 'buldMnnm', '건물번호부번': 'buldSlno',
+                  '건물관리번호': 'bdMgtSn', '우편번호': ''}
 
         response = requests.post(url, params=params, verify=False).text.encode('utf-8')
         xml_obj = bs4.BeautifulSoup(response, 'xml')
@@ -95,7 +87,24 @@ def processed_data(address):
             result.loc[i] = row_list
             row_list.clear()
 
-        result = matching_data(result, get_old_post_num(address))
+        print(result)
+
+        db = dbcon()
+        c = db.cursor()
+
+        for i in result.index:
+            row = result.loc[i]
+            code, bld_bon, bld_bu = row['도로명코드'], row['건물번호본번'], row['건물번호부번']
+
+            where = f"""`도로명코드`='{code}' AND `건물번호본번`='{bld_bon}' AND `건물번호부번`='{bld_bu}'"""
+            print(where)
+            c.execute(f"SELECT `우편번호` FROM `post_num_db` WHERE {where}")
+
+            post_num = c.fetchall()[0]
+            result['우편번호'] = post_num[0]
+
+        db.commit()
+        db.close()
 
         return result
 

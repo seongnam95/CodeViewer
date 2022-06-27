@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'CodeViewerWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jsn0509$dbinfo',
+        'NAME': 'dbjsn0509',
         'USER': 'jsn0509',
         'PASSWORD': 'ks05090818@',
-        'HOST': 'jsn0509.mysql.pythonanywhere-services.com',
+        'HOST': 'db.snserver.site',
     }
 }
 
