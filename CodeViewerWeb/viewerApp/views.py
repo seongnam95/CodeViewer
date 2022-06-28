@@ -16,15 +16,13 @@ def info_viewer(request):
     template = 'bld_info.html'
     if request.method == 'GET':
         address = request.GET.get('address')
-
         result = processed_data(address)
-        print(result)
 
         if result is not None:
 
             address_list = []
             for i in result.index:
-                re_data = {'zip': result['우편번호'][i], 'address': result['도로명주소'][i], 'num': result['건물관리번호'][i]}
+                re_data = {'zip': result['구우편번호'][i], 'address': result['도로명주소'][i], 'num': result['건물관리번호'][i]}
                 address_list.append(re_data)
 
             context = {'address': address_list}
