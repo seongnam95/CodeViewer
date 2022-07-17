@@ -2,6 +2,7 @@ import bs4
 import requests
 import pandas as pd
 import pymysql
+pymysql.install_as_MySQLdb()
 
 
 def dbcon():
@@ -16,8 +17,9 @@ def processed_data(address):
         key = 'U01TX0FVVEgyMDIxMTIwMjEzNTc0MzExMTk4Mjc='
         params = {'confmKey': key, 'currentPage': '1', 'countPerPage': '20', 'resultType': 'xml', 'keyword': address}
         url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
-        column = {'도로명주소': 'roadAddrPart1', '도로명코드': 'rnMgtSn', '건물번호본번': 'buldMnnm', '건물번호부번': 'buldSlno',
-                  '도로명': 'rn', '건물관리번호': 'bdMgtSn', '우편번호': 'zipNo', '구우편번호': ''}
+        column = {'도로명주소': 'roadAddrPart1', '도로명': 'rn', '건물번호본번': 'buldMnnm', '건물번호부번': 'buldSlno', '도로명코드': 'rnMgtSn',
+                  '시도': 'siNm', '시군구': 'sggNm', '읍면동': 'emdNm', '법정리': 'liNm', '번': 'lnbrMnnm', '지': 'lnbrSlno',
+                  '주소': '', '건물관리번호': 'bdMgtSn', '우편번호': 'zipNo', '구우편번호': ''}
 
         response = requests.post(url, params=params, verify=False).text.encode('utf-8')
         xml_obj = bs4.BeautifulSoup(response, 'xml')
@@ -54,9 +56,13 @@ def processed_data(address):
             result['구우편번호'].loc[row] = r[0]
 
         for i in result.index:
+            old = '%s %s %s %s %s-%s' % (result['시도'].loc[i], result['시군구'].loc[i], result['읍면동'].loc[i],
+                                         result['법정리'].loc[i], result['번'].loc[i], result['지'].loc[i])
+            result['주소'].loc[i] = old.replace('  ', ' ')
+
             if len(result['구우편번호'].loc[i]) == 0:
                 result['구우편번호'].loc[i] = result['우편번호'].loc[i]
-        print(result)
+
         db.commit()
         db.close()
 

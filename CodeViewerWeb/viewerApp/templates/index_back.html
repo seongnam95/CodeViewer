@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="/static/css/css_main.css?after">
+      <link rel="stylesheet" href="/static/css/css_input.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="/dist/notifications.css">
+
+      <script src="/dist/notifications.js"></script>
+      <script type="text/javascript" src="/static/js/excel_upload.js"></script>
+      <title>Document</title>
+  </head>
+
+  <div class="container">
+    <header class="codrops-header">
+      <h1>ADDRESS INQUIRY</h1>
+      <span>You can do it.</span>
+    </header>
+
+    <section class="content">
+
+      <form name="addressForm" method="post" action="j_security_check">
+        <fieldset>
+          <input class="upload-name" type="text" id="search_input" />
+          <button type="submit" id="search_button" ><i class="fa fa-search"></i></button>
+        </fieldset>
+      </form>
+
+      <div class="filebox">
+        <form id="frm_excel" name="frm_excel" enctype="multipart/form-data">
+          <label for="ex_filename">업로드(테스트)</label>
+          <input type="file" id="ex_filename" name="file_excel" class="upload-hidden" accept=".xls, .xlsx, .xlsm">
+        </form>
+      </div>
+
+      <table id="address_table" class="address_table"></table>
+<!--      <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>-->
+    </section>
+  </div>
+
+  <!-- jQuery 라이브러리 사용 -->
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $('form[name=addressForm]').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "search",
+                type: "GET",
+                data: { address: $('#search_input', this).val() },
+                dataType: "html",
+                success:function(data){
+                  $('#address_table').html(data)
+                },
+                error: function(request, status, error){
+                  alert('서버와의 연결에 실패하였습니다.');
+                }
+            });
+        });
+    });
+  </script>
+  <script>
+      $(document).ready(function(){
+          var fileTarget = $('.filebox .upload-hidden');
+
+          fileTarget.on('change', function(){  // 값이 변경되면
+            if(window.FileReader){
+              var filename = $(this)[0].files[0].name;
+              excel_upload();
+            }
+            else {
+              var filename = $(this).val().split('/').pop().split('\\').pop();
+            }
+
+            $(this).siblings('.upload-name').val(filename);
+          });
+        });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <script>
+    var clipboard = new ClipboardJS('.btn');
+    clipboard.on('success', function() { });
+  </script>
+
+</html>

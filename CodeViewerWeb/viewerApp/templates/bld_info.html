@@ -1,23 +1,31 @@
+{% load sass_tags %}
 
-<link rel="stylesheet" href="/static/css/css_table.css?after">
+<link href="{% sass_src 'css/css_table.scss' %}" rel="stylesheet" type="text/css" />
 
-<html>
-  <table id="address_table" class="address_table">
-    <thead>
-      <tr style="text-align: left;">
-        <th>우편번호</th>
-        <th>도로명주소</th>
-        <th>건물관리번호</th>
+<table class="custom-table">
+  <colgroup>
+    <col style="width:55%">
+    <col style="width:15%">
+    <col style="width:30%">
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th scope="col">ADDRESS</th>
+      <th scope="col">POST-NUM</th>
+      <th scope="col">BUILDING-NUM</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ad in address %}
+      <tr>
+        <td>
+          <p style="text-align: right; padding-right: 20px;">{{ ad.old }}</p>
+          <p style="text-align: right; padding-right: 20px;">{{ ad.address }}</p>
+        </td>
+        <td><p class="clip" data-clipboard-text='{{ ad.zip }}'>{{ ad.zip }}</p></td>
+        <td><p class="clip" data-clipboard-text='{{ ad.num }}'>{{ ad.num }}</p></td>
       </tr>
-    </thead>
-    <tbody>
-        {% for ad in address %}
-          <tr style="text-align: left;">
-            <td><p id="zip" class="btn" data-clipboard-text='{{ ad.zip }}'>{{ ad.zip }}</p></td>
-            <td id="address_td">{{ ad.address }}</td>
-            <td><p id="num" class="btn" data-clipboard-text='{{ ad.num }}'>{{ ad.num }}</p></td>
-          </tr>
-        {% endfor %}
-    </tbody>
-  </table>
-</html>
+    {% endfor %}
+  </tbody>
+</table>

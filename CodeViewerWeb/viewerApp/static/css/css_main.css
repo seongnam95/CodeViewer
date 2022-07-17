@@ -1,81 +1,15 @@
-/*This was all taken from https://tympanus.net/Development/ButtonStylesInspiration/ but I needed to see it in CodePen
-*/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Poppins:ital,wght@1,300&display=swap');
-@font-face {
-  font-weight: normal;
-  font-style: normal;
+
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    text-align: center;
+    color: rgb(120,120,120);
+    transition: .3s all ease;
 }
 
-/* Body */
-body {
-  background: #cfd8dc;
-  color: #37474f;
-  font-weight: 400;
-  font-size: 1em;
-}
-
-.container {
-  margin: 0 auto;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* Header */
-.codrops-header {
-  padding: 1em 190px 3em;
-  letter-spacing: -1px;
-}
-.codrops-header h1 {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 200;
-  font-size: 3em;
-  line-height: 1;
-  margin-bottom: 0;
-}
-.codrops-header span {
-  font-family: 'Poppins', sans-serif;
-  font-size: 150%;
-  display: block;
-  letter-spacing: 0;
-  padding: 0.5em 0 1em 0;
-  color: #A8B3B8;
-}
-
-/* Content */
-.content {
-  padding: 2em 1em 5em;
-  z-index: 1;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.box {
-  padding: 1.5em 0;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-justify-content: center;
-  justify-content: center;
-  position: static;
-}
-
-.bg-1 {
-  background: #ECEFF1;
-  color: #37474f;
-}
-
-.content p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1em;
-  color: #A8B3B8;
-}
-
-/* 엑셀 업로드 버튼 */
-
-#upload_button {
-    color: white;
-    border: 1px;
+.clip:hover {
+    font-size: 16px;
+    color: rgb(22,22,22);
 }

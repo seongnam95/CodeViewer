@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta charset="UTF-8">
-      <link rel="stylesheet" href="/static/css/css_main.css?after">
-      <link rel="stylesheet" href="/static/css/css_input.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link rel="stylesheet" href="/dist/notifications.css">
+{% load sass_tags %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Princess Secretary</title>
+        <link rel="stylesheet" href="/static/css/css_main.css">
+        <link href="{% sass_src 'css/wave.scss' %}" rel="stylesheet" type="text/css" />
+        <link href="{% sass_src 'css/css_input.scss' %}" rel="stylesheet" type="text/css" />
 
-      <script src="/dist/notifications.js"></script>
-      <script type="text/javascript" src="/static/js/excel_upload.js"></script>
-      <title>Document</title>
-  </head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <div class="container">
-    <header class="codrops-header">
-      <h1>ADDRESS INQUIRY</h1>
-      <span>You can do it.</span>
-    </header>
+        <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    </head>
 
-    <section class="content">
+    <body>
+        <div class='box'>
+            <div class='wave -one'></div>
+            <div class='wave -two'></div>
+            <div class='wave -three'></div>
+            <div class='title'>Secretary</div>
+        </div>
+        <p>You look great today.</p>
 
-      <form name="addressForm" method="post" action="j_security_check">
-        <fieldset>
-          <input class="upload-name" type="text" id="search_input" />
-          <button type="submit" id="search_button" ><i class="fa fa-search"></i></button>
-        </fieldset>
-      </form>
+        <div class="form_box">
+            <form name="addressForm">
+                <fieldset class="field-container">
+                    <input type="text" class="field" id="search_input"/>
+                    <div class="icons-container">
+                        <div class="icon-search"></div>
+                        <div class="icon-close">
+                            <div class="x-up"></div>
+                            <div class="x-down"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
 
-      <div class="filebox">
-        <form id="frm_excel" name="frm_excel" enctype="multipart/form-data">
-          <label for="ex_filename">업로드(테스트)</label>
-          <input type="file" id="ex_filename" name="file_excel" class="upload-hidden" accept=".xls, .xlsx, .xlsm">
-        </form>
-      </div>
-
-      <table id="address_table" class="address_table"></table>
-<!--      <p class="bot_txt">Press <a href="https://naver.com">here !</a> You'll be happy !</p>-->
-    </section>
-  </div>
+        <section id="address_table"></section>
+    </body>
 
   <!-- jQuery 라이브러리 사용 -->
-  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
   <script type="text/javascript">
     $(document).ready(function () {
         $('form[name=addressForm]').on('submit', function (e) {
             e.preventDefault();
+            document.getElementById("search_input").blur()
 
             $.ajax({
                 url: "search",
@@ -61,27 +63,34 @@
         });
     });
   </script>
+  <!-- 클립보드-->
   <script>
-      $(document).ready(function(){
-          var fileTarget = $('.filebox .upload-hidden');
-
-          fileTarget.on('change', function(){  // 값이 변경되면
-            if(window.FileReader){
-              var filename = $(this)[0].files[0].name;
-              excel_upload();
-            }
-            else {
-              var filename = $(this).val().split('/').pop().split('\\').pop();
-            }
-
-            $(this).siblings('.upload-name').val(filename);
-          });
-        });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-  <script>
-    var clipboard = new ClipboardJS('.btn');
+    var clipboard = new ClipboardJS('.clip');
     clipboard.on('success', function() { });
   </script>
+  <!-- 검색창 -->
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('.field').on('focus', function() {
+            $('body').addClass('is-focus');
+        });
 
+        $('.field').on('blur', function() {
+            $('body').removeClass('is-focus is-type');
+        });
+
+        $('.field').on('keydown', function(event) {
+            $('body').addClass('is-type');
+            if((event.which === 8) && $(this).val() === '') {
+                $('body').removeClass('is-type');
+            }
+        });
+    });
+  </script>
+    <script type="text/javascript">
+      $(window).on("load resize ", function() {
+          var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+          $('.tbl-header').css({'padding-right':scrollWidth});
+      }).resize();
+    </script>
 </html>
